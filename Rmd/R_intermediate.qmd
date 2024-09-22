@@ -1,0 +1,467 @@
+---
+title: "Intermediate R for Infectious Disease Modelling"
+author: "James Mba Azam"
+format: html
+editor: visual
+---
+
+## Introduction
+
+This document provides a summary of *R* commands that will be useful to learn or refresh in preparation for this "Modelling for Pandemic Preparedness" course.
+
+While we expect that you will have some knowledge of *R*, the commands listed below are the ones that we think it would be most useful for you to familiarise yourselves with in order to be able to read the code we will provide for the practical session, and to debug any code you write yourselves during the sessions.
+
+There are links in various places which will take you to web sites that provide further information, if you would like more detail on any particular concept. A good general and detailed introduction to *R* is provided in the [R manual](http://cran.r-project.org/doc/manuals/R-intro.html).
+
+## Data types
+
+The data types we will be working with in the course are (named) *vectors*, *lists*, and *data frames*. More information on data types in *R* can be found in many places on the web, for example the [R programming wikibook](http://en.wikibooks.org/wiki/R_Programming/Data_types).
+
+### Vectors
+
+Vectors are an ordered collection of simple elements such as numbers or strings. They can be created with the `c()` command.
+
+```{r}
+a <- c(1, 3, 6, 1)
+a
+```
+
+An individual member at position `i` can be accessed with `[i]`.
+
+```{r}
+a[2]
+```
+
+Importantly, vectors can be named. We will use this to define parameters for a model. For a named vector, simply specify the names as you create the vector
+
+```{r}
+b <- c(start = 3, inc = 2, end = 17)
+b
+```
+
+The elements of a named vector can be accessed both by index
+
+```{r}
+b[2]
+```
+
+and by name
+
+```{r}
+b["inc"]
+```
+
+To strip the names from a named vector, one can use double brackets
+
+```{r}
+b[["inc"]]
+```
+
+```{r}
+b[[2]]
+```
+
+or the `unname` function
+
+```{r}
+unname(b)
+```
+
+Several functions exist to conveniently create simple vectors. To create a vector of equal elements, we can use =rep=
+
+```{r}
+rep(3, times = 10)
+```
+
+To create a sequence, we can use `seq`
+
+```{r}
+seq(from = 3, to = 11, by = 2)
+```
+
+If the increments are by 1, we can also use a colon
+
+```{r}
+3:11
+```
+
+To create a sequence that starts at 1 with increments of 1, we can use `seq_len`
+
+```{r}
+seq_len(5)
+```
+
+### Lists
+
+Lists are different from vectors in that elements of a list can be anything (including more lists, vectors, etc.), and not all elements have to be of the same type either.
+
+```{r}
+l <- list("cabbage", c(3,4,1))
+l
+```
+
+Similar to vectors, list elements can be named:
+
+```{r}
+l <- list(text = "cabbage", numbers = c(3,4,1))
+l
+```
+
+The meaning of brackets for lists is different to vectors. Single brackets return a list of one element
+
+```{r}
+l["text"]
+```
+
+whereas double brackets return the element itself (not within a list)
+
+```{r}
+l[["text"]]
+```
+
+More on the meanings of single and double brackets, as well as details on another notation for accessing elements (using the dollar sign) can be found in the [R language specification](http://cran.r-project.org/doc/manuals/R-lang.html#Indexing).
+
+### Data frames
+
+Data frames are 2-dimensional extensions of vectors. They can be thought of as the *R*-version of an Excel spreadsheet. Every column of a data frame is a vector.
+
+```{r}
+df <- data.frame(a = c(2, 3, 0), b = c(1, 4, 5))
+df
+```
+
+Data frames themselves have a version of single and double bracket notation for accessing elements. Single brackets return a 1-column data frame
+
+```{r}
+df["a"]
+```
+
+whereas double brackets return the column as a vector
+
+```{r}
+df[["a"]]
+```
+
+To access a row, we use single brackets and specify the row we want to access before a comma
+
+```{r}
+df[2, ]
+```
+
+Note that this returns a data frame (with one row). A data frame itself is a list, and a data frame of one row can be converted to a named vector using `unlist`
+
+```{r}
+unlist(df[2, ])
+```
+
+We can also select multiple rows
+
+```{r}
+df[c(1,2), ]
+```
+
+We can select a column, or multiple columns, after the comma
+
+```{r}
+df[2, "a"]
+```
+
+# Functions
+
+Functions are at the essence of everything in *R*. The `c()` command used earlier was a call to a function (called `c`). To find out about what a function does, which parameters it takes, what it returns, as well as, importantly, to see some examples for use of a function, one can use `?`, e.g. `?c` or `?data.frame`. More information on functions can be found in the [R programming wikibook](http://en.wikibooks.org/wiki/R_Programming/Working_with_functions).
+
+To define a new function, we assign a `function` object to a variable. For example, a function that increments a number by one.
+
+```{r}
+add1 <- function(x) {
+    return(x + 1)
+}
+add1(3)
+```
+
+To see how any function does what it does, one can look at its source code by typing the function name:
+
+```{r}
+add1
+```
+
+### Passing functions as parameters
+
+Since functions themselves are variables, they can be passed to other functions. For example, we could write a function that takes a function and a variable and applies the function twice to the variable.
+
+```{r}
+doTwice <- function(f, x) {
+    return(f(f(x)))
+}
+doTwice(add1, 3)
+```
+
+### Debugging functions
+
+Writing functions comes with the need to debug them, in case they return errors or faulty results. *R* provides its own debugger, which is started with `debug`:
+
+```{r}
+debug(add1)
+```
+
+On the next call to the function `add1`, this puts us into *R*'s own debugger, where we can advance step-by-step (by typing `n`), inspect variables, evaluate calls, etc. To quits the debugger, type `Q`. To stop debugging function `add1`, we can use
+
+```{r}
+undebug(add1)
+```
+
+More on the debugging functionalities of *R* can be found on the [Debugging in R](http://www.stats.uwo.ca/faculty/murdoch/software/debuggingR/) pages.
+
+An alternative way for debugging is to include printouts in the function, for example using `cat`
+
+```{r}
+add1 <- function(x) {
+    cat("Adding 1 to", x, "\n")
+    return(x + 1)
+}
+add1(3)
+```
+
+# Loops and conditional statements
+
+This section discusses the basic structural syntax of *R*: `for` loops, conditional statements and the `apply` family of functions.
+
+### For loops
+
+A `for` loop in *R* is written using the word `in` and a vector of values that the loop variable takes. For example, to create the square of the numbers from 1 to 10, we can write
+
+```{r}
+squares <- NULL
+for (i in 1:10) {
+    squares[i] <- i * i
+}
+squares
+```
+
+### Conditional statements
+
+A conditional statement in *R* is written using `if`:
+
+```{r}
+k <- 13
+if (k > 10) {
+    cat("k is greater than 10\n")
+}
+```
+
+An alternative outcome can be specified with `else`
+
+```{r}
+k <- 3
+if (k > 10) {
+    cat("k is greater than 10\n")
+} else {
+    cat("k is not greater than 10\n")
+}
+```
+
+# Efficient R with Vectorisation
+
+## The `apply` family of functions
+
+*R* is not optimised for `for` loops, and they can be slow to compute. An often faster and more elegant way to loop over the elements of a vector or data frame is using the `apply` family of functions: `apply`, `lapply`, `sapply` and others. An good introduction to these functions can be found in [this blog post](http://nsaunders.wordpress.com/2010/08/20/a-brief-introduction-to-apply-in-r/).
+
+The `apply` function operates on data frames. It takes three arguments: the first argument is the data frame to apply a function to, the second argument specifies whether the function is applied by row (1) or column (2), and the third argument is the function to be applied. For example, to take the mean of `df` by row, we write
+
+```{r}
+apply(df, 1, mean)
+```
+
+To take the mean by column, we write
+
+```{r}
+apply(df, 2, mean)
+```
+
+The `lapply` and `sapply` functions operate on lists or vectors. Their difference is in the type of object they return. To take the square root of every element of vector `a`, we could use `lapply`, which returns a list
+
+```{r}
+lapply(a, sqrt)
+```
+
+`sapply`, on the other hand, does the same thing but returns a vector:
+
+```{r}
+sapply(a, sqrt)
+```
+
+We can specify any function to be used by the `apply` functions, including one we define ourselves. For example, to take the square of every element of vector `a` and return a vector, we can write
+
+```{r}
+sapply(a, function(x) { x * x})
+```
+
+Of course, the last two examples could have been calculated much simpler using `sqrt(a)` and `a*a`, but in many examples, there is no such simple expression, and the `apply` functions come in handy.
+
+-   Probability distributions
+
+Probability distributions are at the heart of many aspects of model fitting. *R* provides functions to both estimate the probability of obtaining a certain value under a given probability distribution and to sample random numbers from the same distribution. The corresponding functions have a common nomenclature, that is `dxxx` for the probability (density) of a given value and `rxxx` for generation of a random number from the same distribution. For example, for a uniform distribution we have `dunif` and `runif`, and to generate a random number between 0 and 5 we can write
+
+```{r}
+r <- runif(n = 1, min = 0, max = 5)
+r
+```
+
+This number has density $1/(\mathrm{max}-\mathrm{min})=0.2$ within the uniform distribution:
+
+```{r}
+dunif(x = r, min = 0, max = 5)
+```
+
+For almost all probability distributions, we can get the logarithm of the probability density by passing `log = TRUE`:
+
+```{r}
+dunif(x = r, min = 0, max = 5, log = TRUE)
+```
+
+Other functions available are `rnorm` and `dnorm` for the normal distribution, `rpois` and `dpois` for the Poisson distribution, and many more. A number of probability distributions and their corresponding *R* functions can be found in the [R programming wikibook](http://en.wikibooks.org/wiki/R_Programming/Probability_Distributions).
+
+-   Running dynamic models
+
+*R* provides packages for running both deterministic and stochastic dynamic models. For deterministic models, the `deSolve` package is a good choice, whereas for stochastic models, `adaptivetau` is recommended.
+
+## Deterministic models
+
+The `deSolve` package can be installed with `install.packages("deSolve")`. Once installed, it is loaded with
+
+```{r}
+library(deSolve)
+```
+
+The command for running a model based on a system of differential equations (e.g., the ones of the SIR model), is `ode`. It takes as parameters the initial state (as a named vector), parameters (again, a named vector), the times at which to produce model output, and a model function `func` -- for more details, see the [deSolve vignette](http://cran.r-project.org/web/packages/deSolve/vignettes/deSolve.pdf). The `func` argument is for specifying the derivatives in the system of ordinary differential equations. It is passed a function that takes the current time, the current state of the system and the parameters and returns a list of transition rates. For the SIR model, for example, we could write
+
+```{r}
+sirOde <- function(time, state, parameters) {
+    
+    ## parameters
+    beta <- parameters["R_0"] / parameters["infectious.period"]
+    gamma <- 1 / parameters["infectious.period"]
+    
+    ## states
+    S <- state["S"]
+    I <- state["I"]
+    R <- state["R"]
+    
+    N <- S + I + R
+    
+    dS <- -beta * S * I/N
+    dI <- beta * S * I/N-gamma * I
+    dR <- gamma * I
+    
+    return(list(c(dS, dI, dR)))
+}
+```
+
+We can plug this into the `ode` function
+
+```{r}
+trajectory <- ode(
+    y = c(S = 999, I = 1, R = 0),
+    times = 1:10,
+    parms = c(R_0 = 5, infectious.period = 1),
+    func = sirOde
+)
+trajectory
+```
+
+## Stochastic models
+
+The `adaptivetau` package can be installed with `install.packages("adaptivetau")`. Once installed, it is loaded with
+
+```{r}
+library(adaptivetau)
+```
+
+The `adaptivetau` package uses a different syntax from the `deSolve` package. Instead of providing a function to calculate the rates of change at each time point, one specifies a list of /transitions/ and their rates. Examples for how this is done can be found in the [adaptivetau vignette](http://cran.r-project.org/web/packages/adaptivetau/vignettes/adaptivetau.pdf).
+
+For the SIR model, we could write
+
+```{r}
+sirTransitions <- list(
+    c(S = -1, I = 1), # infection
+    c(I = -1, R = 1) # recovery
+)
+
+sirRateFunc <- function(x, parameters, t) {
+    beta <- parameters["R_0"] / parameters["infectious.period"]
+    nu <- 1 / parameters["infectious.period"]
+    
+    S <- x["S"]
+    I <- x["I"]
+    R <- x["R"]
+    
+    N <- S + I + R
+    
+    return(c(
+        beta * S * I / N, # infection
+        nu * I # recovery
+    ))
+}
+```
+
+To run the stochastic model, we then use the `ssa.adaptivetau` function, which takes a vector of initial conditions, the list of transitions and rate function, a named vector of parameters, and the final time (with simulations starting at time 0).
+
+```{r}
+run <- ssa.adaptivetau(
+    init.values = c(S = 999, I = 1, R = 0),
+    transitions = sirTransitions,
+    rateFunc = sirRateFunc,
+    params = c(R_0 = 5, infectious.period = 1),
+    tf = 10
+)
+head(run)
+```
+
+Unlike `ode` from the `deSolve` package, this does not produce output at specific times, but every time an event happens. To convert this to different times, we first convert the output of `ssa.adaptivetau` to a data frame (`ssa.adaptivetau` returns a /matrix/, a data type which we do not discuss here) using `data.frame`
+
+```{r}
+runDf <- data.frame(run)
+```
+
+To get the output at chosen times, we can use `approx`
+
+```{r}
+# get output at times 1, ..., 10
+runAtTimes <- approx(
+    x = runDf$time,
+    y = runDf$I,
+    xout = 1:10,
+    method = "constant"
+)
+runAtTimes
+```
+
+By applying this to all the variables returned by `ssa.adaptivetau`, we can construct a data frame with model output at the desired times.
+
+# Plotting
+
+The simplest way to plot a function using `plot`. To plot the output of the deterministic SIR run above, we first convert it to a data frame (`ode` returns a /matrix/, a data type which we do not discuss here) using `data.frame`
+
+```{r}
+trajectoryDf <- data.frame(trajectory)
+```
+
+We can then plot the number of infected against time using
+
+```{r}
+plot(x = trajectoryDf$time, y = trajectoryDf$I)
+```
+
+A slightly more involved way with many options for different types of plot is using the `ggplot2` package. This can be installed with `install.packages("ggplot2")` and loaded with
+
+```{r}
+library(ggplot2)
+```
+
+`ggplot2` uses a somewhat peculiar syntax. To create a similar plot to the one above using `ggplot`, we would write
+
+```{r}
+ggplot(trajectoryDf, aes(x = time, y = I)) + geom_point()
+```
+
+A detailed introduction to `ggplot2` and its numerous options for plotting is beyond the scope of this introduction, but comprehensive documentation as well as many examples can be found on the [ggplot2 website](http://ggplot2.org/).
