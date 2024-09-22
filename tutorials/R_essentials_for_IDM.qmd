@@ -802,7 +802,7 @@ Does this match the data you read before in using `read.csv` well? Note, that th
 
 What we are doing here is assessing our model's "fit" to the data. This is a key stage in the development of any model - does it reflect reality? The simplest way to do this is by plotting model output and data together and comparing them by eye. Over the next few days, you will try out different methods for model fitting.
 ```{r }
-data$number = data$proportion * 100000
+data$number <- data$proportion * 100000
 plot(out[,"time"],out[,"S"],type="l",lwd = 5, col="green",xlab="Time",ylab="Number")
 lines(out[,"time"],out[,"I"],col="red",lwd = 5)
 lines(out[,"time"],out[,"R"],col="blue",lwd = 5)
