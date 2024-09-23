@@ -82,3 +82,6 @@ stan/lognormal
 *.vrb
 *.xdv
 *.run.xml
+
+# Plot extensions
+*.png
