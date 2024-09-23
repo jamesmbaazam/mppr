@@ -85,3 +85,4 @@ stan/lognormal
 
 # Plot extensions
 *.png
+*.pdf
