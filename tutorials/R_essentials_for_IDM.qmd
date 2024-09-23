@@ -109,9 +109,11 @@ The first two are equivalent, whilst the last will do a full text search of all 
 
 Can you use `??` to find out how you would generate binomial random numbers in R? 
 
-## Data types
+## Data structures
 
-The most common data types you will be working with are: *vectors*, *lists*, and *matrices*, *data frames*. More information on data types in *R* can be found in many places on the web, for example the [R programming wikibook](http://en.wikibooks.org/wiki/R_Programming/Data_types).
+Data structures define how a value should be stored and manipulated.
+
+The most common data types you will be working with are: *vectors*, *lists*, *matrices*, *data frames*, and *factors*. More information on data types in *R* can be found in many places on the web, for example the [R programming wikibook](http://en.wikibooks.org/wiki/R_Programming/Data_types).
 
 ### Vectors
 
@@ -308,11 +310,37 @@ The difference between matrices and data.frames in R is that matrices can only c
 Can you generate a matrix of size 10 x 5, filled with 2s except for the first column that has the sequence 1 to 10? 
 :::
 
+### Factors
+
+Factors are used to define categorical data in *R*. Factors are also useful for working with characters in a non-alphabetical order.
+
+You create a factor with the `factor()` function.
+
+```{r}
+# Create a factor
+music_genre <- factor(c("Jazz", "Rock", "Classic", "Classic", "Pop", "Jazz", "Rock", "Jazz"))
+music_genre
+```
+
+To see the levels in the factor, use the `levels()` function
+
+```{r}
+levels(music_genre)
+```
+
+You can define your own factor levels
+```{r}
+x <- c("Man", "Male", "Man", "Lady", "Female")
+## Map from 4 different values to only two levels:
+xf <- factor(x, levels = c("Male", "Man" , "Lady", "Female"))
+xf
+```
+
+::: {.callout-note}
 A quick note here on "not a numbers". In R these are `NA` or `NaN`. This is usually an error or the result of a silly division.
-```{r eval = FALSE}
 0/0
 1/0 # Infinity = Inf
-```
+:::
 
 ## R packages
 
