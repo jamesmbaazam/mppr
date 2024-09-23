@@ -20,6 +20,11 @@ This document provides a summary of *R* commands that will be useful to learn or
 
 There are links in various places which will take you to web sites that provide further information, if you would like more detail on any particular concept. A good general and detailed introduction to *R* is provided in the [R manual](http://cran.r-project.org/doc/manuals/R-intro.html).
 
+## Software
+
+To render this document, you will need the latet version of R, and [Quarto](https://quarto.org/docs/download/).
+
+
 ## Objectives
 
 The aim of this session is to introduce you to the basics of R programming.
