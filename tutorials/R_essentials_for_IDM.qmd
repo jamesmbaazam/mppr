@@ -301,7 +301,7 @@ m
 Can you explain what happened? What is it called in R?
 
 What happens when you assign more elements than there are in the matrix?
-```{r eval=FALSE}
+```{r error=TRUE,eval=FALSE}
 m[, 1] <- c(2, 3, 9)
 ```
 
