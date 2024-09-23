@@ -86,4 +86,7 @@ stan/lognormal
 # Plot extensions
 *.png
 *.pdf
+
+# Other extensions
 *.html
+*.key
