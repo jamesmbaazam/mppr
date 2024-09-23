@@ -478,7 +478,6 @@ lines(flu_hh[, "time"], flu_hh[, "num_inf"]) # add lines to the same plot (and v
 plot(flu_hh[, "time"], flu_hh[, "num_inf"], type = "l", col = "red") # Red line
 plot(flu_hh[, "time"], flu_hh[, "num_inf"], type = "l", col = "red", xlab = "Time", ylab = "Number") # Label axis
 dev.off() # stops the par command - one window per plot
-dev.off() # stops the pdf command
 ```
 
 # Loops and conditional statements
