@@ -90,3 +90,4 @@ stan/lognormal
 # Other extensions
 *.html
 *.key
+*/figures
