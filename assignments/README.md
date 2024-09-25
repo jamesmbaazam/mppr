@@ -9,26 +9,39 @@
 
 ## COVID-19 modelling
 
-- You will code up the model in the paper, [“Modeling COVID-19 dynamics in the sixteen West African countries”](https://www.sciencedirect.com/science/article/pii/S2468227622003143).
+This is majorly a reproducibility exercise.
+
+The goal here is to re-implement the model in the paper, [“Modeling COVID-19 dynamics in the sixteen West African countries”](https://www.sciencedirect.com/science/article/pii/S2468227622003143). 
+
+### Tasks
+
+- Do you agree with the model structure used? How would you modify it?
 - Convince yourself that you understand the dynamics
-- Find the best fitting parameter values:
-    - Fix infectious period and do a grid search for the other parameters that fit the data
-- Brainstorm what additional data would be needed to fit the model aside the data provided
+- Use the model fitting approach used in the paper or suggest/attempt an alternative approach.
+- You are provided with data. Brainstorm what additional data would be needed to fit the model aside the data provided.
 - Explore scenarios:
     - Expected mortality given resource constraints
     - Mitigation strategies:
-    - Detection rate (case ascertainment), which can be used as proxy for testing capacity.
-    - NPI (transmission rate reduction)
+        - Detection rate (case ascertainment), which can be used as proxy for testing capacity.
+        - NPI (transmission rate reduction)
 
 ## Mpox modelling
 
-- Model: Two SIR-type models:
-    - Model 1: Model with homogenous mixing + two transmission routes
+### Brief
+
+There is an [ongoing mpox outbreak](https://www.who.int/news/item/14-08-2024-who-director-general-declares-mpox-outbreak-a-public-health-emergency-of-international-concern) that is disproportionately affecting the Democratic Republic of Congo (DRC). Many initiatives have been put in place to brainstorm how to respond to the analytics needs of this outbreak in a timely fashion. See for example, the [WHO Mpox analytics Collaboratory](https://www.who.int/initiatives/collaboratory/community).
+
+### Goal
+
+The goal here will be to attempt to model the long term dynamics of mpox, investigating the impact of different transmission pathways and contact patterns on the spread of the disease.
+
+### Tasks
+
+- Develop two compartmental models:
+    - Model 1: Model with homogenous mixing + three transmission routes (direct contact, airborne, and sexual contact).
     - Model 2: Modify the simple model to include heterogeneous mixing with contact patterns.
-- Data:
-    - You will be given 3 datasets (already prepared): [Incidence data](https://global.health/), age pyramids, social contact matrices
-- Model fitting:
-    - Explore different combinations of the parameters of close contacts (assumed to be sexual contacts; simplification) and airborne transmission that best fit the DRC data.
+- Data: You will be given 3 datasets [Incidence data](https://global.health/), age pyramids, social contact matrices.
+- Model fitting: Explore different combinations of the parameters of close contacts (assumed to be sexual contacts; a simplification) and airborne transmission that best fit the DRC data.
     
 ### Resources
 
