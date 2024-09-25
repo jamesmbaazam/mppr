@@ -40,7 +40,7 @@ The goal here will be to attempt to model the long term dynamics of mpox, invest
 - Develop two compartmental models:
     - Model 1: Model with homogenous mixing + three transmission routes (direct contact, airborne, and sexual contact).
     - Model 2: Modify the simple model to include heterogeneous mixing with contact patterns.
-- Data: You will be given 3 datasets [Incidence data](https://global.health/), age pyramids, [social contact matrices](https://hugogruson.fr/contactdata/articles/countries.html).
+- Data: You will be given 3 datasets [Incidence data](https://docs.google.com/spreadsheets/d/1kSlxbCB0JfvScyK1v0mhL-CZeCqxlSJA/edit?gid=1051184634#gid=1051184634), [DRC age pyramid](https://docs.google.com/spreadsheets/d/1v2UhmDXpymCxc9DuLzlYpKD6KHN7-B0xVoJoq3UlvmQ/edit?gid=0#gid=0), [social contact matrices](https://hugogruson.fr/contactdata/articles/countries.html).
 - Model fitting: Explore different combinations of the parameters of close contacts (assumed to be sexual contacts; a simplification) and airborne transmission that best fit the DRC data.
     
 ### Resources
