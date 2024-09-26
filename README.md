@@ -1,4 +1,6 @@
-# Modelling for Pandemic Preparedness and Response (MPPR)
+# Modelling for Pandemic Preparedness and Response (MPPR) Modular Shortcourse
+
+This repository contains materials for the in-person part of this course organized by the German West African Center for Global Health and Pandemic Prevention, a center hosted at the Kwame Nkrumah University of Science and Technology in Kumasi, Ghana.
 
 ## Contents
 
